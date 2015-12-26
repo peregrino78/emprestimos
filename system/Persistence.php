@@ -228,4 +228,9 @@ class Persistence
 		$delete = $this->db->prepare("DELETE FROM {$this->table} WHERE id = ?");
 		return $delete->execute(array($id));
 	}
+
+	public function close_connection()
+	{
+		$this->db = null;
+	}
 }

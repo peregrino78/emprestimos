@@ -35,7 +35,7 @@ class Parcelas extends Model
 
 	}
 
-	public function valor_quitado($id_emprestimo)
+	/*public function valor_quitado($id_emprestimo)
 	{
 		$consulta = $this->select()->where('id_emprestimo', '=', $id_emprestimo);
 		$resultado = $this->prepare($consulta);
@@ -46,5 +46,5 @@ class Parcelas extends Model
 		}
 
 		return $valor_quitado;
-	}
+	}*/
 }

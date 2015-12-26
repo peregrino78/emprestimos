@@ -5,6 +5,7 @@ class Parcelas_Controller extends Controller
 	protected $emprestimos;
 	protected $clientes;
 	protected $view;
+	protected $parcelas_por_emprestimos;
 
 	public function __construct($models = array())
 	{
@@ -54,9 +55,34 @@ class Parcelas_Controller extends Controller
 
 		$cliente = $this->clientes->obter_cliente_pelo_id($id_cliente);
 		$emprestimo = $this->emprestimos->obter_emprestimo_por_id($id_emprestimo);
-		$parcelas = $this->parcelas->listar_parcelas($id_emprestimo);
+
+		$this->parcelas_por_emprestimos = $this->parcelas($id_emprestimo);
+		$parcelas = $this->parcelas_por_emprestimos;
+		$quitado = $this->valor_quitado();
+		$falta_quitar = $this->valor_nao_quitado($id_emprestimo);
 
 		$this->view->layout('layout_default');
-		return $this->view->make('parcelas.listar_parcelas', compact('parcelas', 'cliente', 'emprestimo'));
+		return $this->view->make('parcelas.listar_parcelas', compact('parcelas', 'cliente', 'emprestimo','quitado', 'falta_quitar'));
+	}
+
+	public function parcelas($id_emprestimo)
+	{
+		return $this->parcelas->listar_parcelas($id_emprestimo);
+	}
+
+	public function valor_quitado()
+	{
+		$valor_quitado = 0;
+		foreach ($this->parcelas_por_emprestimos as $valor) {
+			$valor_quitado += $valor->valor_parcela;
+		}
+
+		return $valor_quitado;
+	}
+
+	public function valor_nao_quitado($id_emprestimo)
+	{
+		$emprestimo = $this->emprestimos->obter_emprestimo_por_id($id_emprestimo);
+		return $emprestimo['valor_emprestimo'] - $this->valor_quitado();
 	}
 }
