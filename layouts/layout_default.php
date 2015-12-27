@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title>Gerenciador de Emprestimos</title>
 
 	<?php Helper::css('css.bootstrap');?>
 	<?php Helper::css('css.style');?>

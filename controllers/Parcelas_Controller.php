@@ -4,14 +4,16 @@ class Parcelas_Controller extends Controller
 	protected $parcelas;
 	protected $emprestimos;
 	protected $clientes;
+	protected $validator;
 	protected $view;
 	protected $parcelas_por_emprestimos;
 
-	public function __construct($models = array())
+	public function __construct($models = array(), $services = array())
 	{
 		$this->parcelas = $models['Parcelas'];
 		$this->emprestimos = $models['Emprestimos'];
 		$this->clientes = $models['Clientes'];
+		$this->validator = $services['Data_Validator'];
 		
 		$this->view = $this->view();
 	}
@@ -38,14 +40,22 @@ class Parcelas_Controller extends Controller
 		$data['parcela_paga'] = true;
 		$data['data_pagamento'] = Date::date_now('br');
 		$data['hora_pagamento'] = Date::hour();
+        
+        $this->validator->set('valor_parcela', $data['valor_parcela'])->is_required();
 
-		if ($this->parcelas->cadastrar($data)) {
-			Session::flash('success', 'Pagamento Cadastrado com Sucesso.');
-		} else {
-			Session::flash('error', 'Erro ao tentar Cadastrar o Pagamento.');
-		}
+        if ($this->validator->validate()) {
+        	if ($this->parcelas->cadastrar($data)) {
+			    Session::flash('success', 'Pagamento Cadastrado com Sucesso.');
+		    } else {
+			    Session::flash('error', 'Erro ao tentar Cadastrar o Pagamento.');
+		    }
+        }
 
-		Redirect::to('parcelas.form_cadastrar', "id_cliente={$id_cliente}|id_emprestimo={$id_emprestimo}");
+        foreach ($this->validator->get_errors() as $erro) {
+        	Session::flash('error', $erro[0]);
+        }
+		
+		return Redirect::to('parcelas.form_cadastrar', "id_cliente={$id_cliente}|id_emprestimo={$id_emprestimo}");
 	}
 
 	public function listar_parcelas()

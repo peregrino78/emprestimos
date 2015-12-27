@@ -16,17 +16,17 @@
 
         Emprestimo: 
         <small>
-            <?php echo 'R$ ' . number_format($emprestimo['valor_emprestimo'], 2, ',' , '.');?>
+            <?php echo 'R$ ' . Money_format::br_format($emprestimo['valor_emprestimo']);?> |
         </small>
 
         Quitado: 
         <small>
-            <?php echo 'R$ ' . number_format($quitado, 2, ',' , '.');?>
+            <?php echo 'R$ ' . Money_format::br_format($quitado);?> |
         </small>
 
         Falta quitar: 
         <small>
-            <?php echo 'R$ ' . number_format($falta_quitar, 2, ',' , '.');?>
+            <?php echo 'R$ ' . Money_format::br_format($falta_quitar);?>
         </small>
     </h4>
 
@@ -42,7 +42,7 @@
 
         <tr>
             <td><?php echo $parcela->id;?></td>
-            <td><?php echo 'R$ ' . number_format($parcela->valor_parcela, 2, ',', '.');?></td>
+            <td><?php echo 'R$ ' . Money_format::br_format($parcela->valor_parcela);?></td>
             <td><?php echo $parcela->data_pagamento;?></td>
             <td><?php echo $parcela->hora_pagamento;?></td>
         </tr>

@@ -23,7 +23,7 @@
 
         <tr>
             <td><?php echo $emprestimo->id;?></td>
-            <td><?php echo 'R$ ' . number_format($emprestimo->valor_emprestimo, 2, ',', '.');?></td>
+            <td><?php echo 'R$ ' . Money_format::br_format($emprestimo->valor_emprestimo);?></td>
             <td><?php echo $emprestimo->data_emprestimo;?></td>
             <td><a <?php Helper::link_to('parcelas.listar_parcelas', "id_cliente={$emprestimo->id_cliente}|id_emprestimo={$emprestimo->id}");?>Visualizar Parcelas Pagas</a></td>
             <td><a <?php Helper::link_to('parcelas.form_cadastrar', "id_cliente={$emprestimo->id_cliente}|id_emprestimo={$emprestimo->id}");?>Cadastrar Pagamento</a></td>

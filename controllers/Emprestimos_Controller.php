@@ -4,13 +4,15 @@ class Emprestimos_Controller extends Controller
 	protected $emprestimos;
 	protected $clientes;
 	protected $parcelas;
+	protected $validator;
 	protected $view;
 
-	public function __construct($models = array())
+	public function __construct($models = array(), $services = array())
 	{
 		$this->emprestimos = $models['Emprestimos'];
 		$this->clientes = $models['Clientes'];
 		$this->parcelas = $models['Parcelas'];
+		$this->validator = $services['Data_Validator'];
 
 		$this->view = $this->view();
 	}
@@ -31,12 +33,20 @@ class Emprestimos_Controller extends Controller
 		$data['data_emprestimo'] = Date::date_now('br');
 		$data['hora_emprestimo'] = Date::hour();
 
-		if ($this->emprestimos->cadastrar($data)) {
-			Session::flash('success', 'Emprestimo Cadastrado com Sucesso.');
-		} else {
-			Session::flash('error', 'Erro ao tentar Cadastrar o Emprestimo.');
+		$this->validator->set('valor_emprestimo', $data['valor_emprestimo'])->is_required();
+
+		if ($this->validator->validate()) {
+			if ($this->emprestimos->cadastrar($data)) {
+			    Session::flash('success', 'Emprestimo Cadastrado com Sucesso.');
+		    } else {
+			    Session::flash('error', 'Erro ao tentar Cadastrar o Emprestimo.');
+		    }
 		}
 
+		foreach ($this->validator->get_errors() as $erro) {
+        	Session::flash('error', $erro[0]);
+        }
+		
 		return Redirect::to('emprestimos.form_cadastrar', "id_cliente={$data['id_cliente']}");
 	}
 
