@@ -18,7 +18,7 @@
             <td><?php echo $cliente->email;?></td>
             <td><a <?php Helper::link_to('emprestimos.form_cadastrar', "id_cliente={$cliente->id}");?>Cadastrar Emprestimos</a></td>
             <td><a <a <?php Helper::link_to('emprestimos.listar_emprestimos_por_cliente', "id_cliente={$cliente->id}");?>Listar Emprestimos</a></td>
-            <td><a href="" class="btn btn-small btn-success btn-sm">Editar</a></td>
+            <td><a class="btn btn-small btn-success btn-sm" <?php Helper::link_to('clientes.form_editar', "id_cliente={$cliente->id}");?>Editar</a></td>
         </tr>
 
         <?php endforeach;?>

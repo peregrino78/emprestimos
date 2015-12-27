@@ -1,5 +1,11 @@
 <section class="content">
-	<h2>Lista de Parcelas</h2>
+	<h2>Lista de Parcelas Pagas | 
+        <small>
+            <a <?php Helper::link_to('parcelas.form_cadastrar', "id_cliente={$cliente['id']}|id_emprestimo={$emprestimo['id']}");?>
+                Efetuar pagamento de Parcela
+            </a>
+        </small>
+    </h2>
 	<hr>
 
     <h4>
@@ -8,7 +14,12 @@
             <?php echo "{$cliente['nome']} {$cliente['sobre_nome']}";?> |
         </small>
 
-        Valor Quitado até o momento: 
+        Emprestimo: 
+        <small>
+            <?php echo 'R$ ' . number_format($emprestimo['valor_emprestimo'], 2, ',' , '.');?>
+        </small>
+
+        Quitado: 
         <small>
             <?php echo 'R$ ' . number_format($quitado, 2, ',' , '.');?>
         </small>

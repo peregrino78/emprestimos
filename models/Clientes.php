@@ -25,4 +25,17 @@ class Clientes extends Model
 	{
 		return $this->find($id_cliente);
 	}
+
+	public function editar($input = array(), $id_cliente)
+	{
+		$data['nome'] = $input['nome'];
+		$data['sobre_nome'] = $input['sobre_nome'];
+		$data['email'] = $input['email'];
+
+		if ($this->update($data, $id_cliente)) {
+			return true;
+		}
+
+		return false;
+	}
 }
