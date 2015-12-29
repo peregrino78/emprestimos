@@ -12,4 +12,4 @@ Pequena aplicação de cadastro de Emprestimos escrito para testar a nova versã
 
 # Layout
 
-<img src="http://i67.tinypic.com/257hxy1.png" target="_bank"></img>
+<img src="http://i63.tinypic.com/23rajk9.png" target="_bank"></img>
